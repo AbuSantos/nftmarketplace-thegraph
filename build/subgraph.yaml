@@ -1,0 +1,33 @@
+specVersion: 0.0.4
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: NftMarketPlace
+    network: bsc
+    source:
+      address: "0xA463dB23140c3166F8d9584D8d3e6676B91C1d4b"
+      abi: NftMarketPlace
+      startBlock: 21814385
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - HighestBidIncrease
+        - ItemBought
+        - ItemCanceled
+        - ItemListed
+      abis:
+        - name: NftMarketPlace
+          file: NftMarketPlace\abis\NftMarketPlace.json
+      eventHandlers:
+        - event: HighestBidIncrease(address,uint256)
+          handler: handleHighestBidIncrease
+        - event: ItemBought(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleItemBought
+        - event: ItemCanceled(indexed address,indexed address,indexed uint256)
+          handler: handleItemCanceled
+        - event: ItemListed(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleItemListed
+      file: NftMarketPlace\NftMarketPlace.wasm
